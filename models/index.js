@@ -7,3 +7,6 @@ Board.belongsTo(User)
 
 Board.hasMany(Cheese)
 Cheese.hasMany(Board)
+
+
+module.exports = { Board, Cheese, User}
