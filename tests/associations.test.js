@@ -5,7 +5,7 @@ const db = require('../db/db')
 
 describe('Index', () => {
     beforeAll(async() => {
-        await db.sync({force: true})
+        await db.sync({})
     })
     
     // const makeItBaby = async () => {
@@ -38,19 +38,19 @@ describe('Index', () => {
          /******** test user association*/
         const userJoin = await User.findByPk(1, {include: [{ model: Board, include: [{ model: Cheese }]}]})
         const checkUser = userJoin.toJSON();
-        console.log(checkUser)
+        // console.log(JSON.stringify(checkUser, null, 2));
         expect(await checkUser.Boards.length).toBe(1)
-
-        /******** test board association */
-        const boardJoin = await Board.findByPk(1,{include: { model: Cheese }})
-        const checkBoard = await boardJoin.toJSON();
-        console.log(checkBoard)
-        expect(await checkBoard.Cheeses.length).toBe(3)
 
          /******** test cheese association */
         const cheeseJoin = await Cheese.findByPk(1, {include: { model: Board }})
         const checkCheese = cheeseJoin.toJSON();
-        console.log(checkCheese)
-        expect(await checkCheese.Boards.length).toBe(1) //why does .Board only fail this test? but .Boards fails my board.model.test too (unless I remove 'await' from the json line? Only works with length = 0
+        // console.log(checkCheese)
+        expect(await cheeseJoin.Boards.length).toBe(1) //why does .Board only fail this test? but .Boards fails my board.model.test too (unless I remove 'await' from the json line? Only works with length = 0
+
+          /******** test board association */
+          const boardJoin = await Board.findByPk(1, {include: { model: Cheese, required: true }})
+          // const checkBoard = await boardJoin.toJSON();
+          // console.log(checkBoard)
+          expect(await boardJoin.Cheeses.length).toBe(3)
     })
 })

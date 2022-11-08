@@ -3,7 +3,7 @@ const db = require('../db/db')
 
 describe('User', () => {
     beforeAll(async() => {
-        await db.sync({force: true})
+        await db.sync({})
     })
 test('a user has a name and email', async () => {
     const user = await User.create({name: 'Bob', email: 'test@test.com'})

@@ -3,7 +3,7 @@ const db = require('../db/db')
 
 describe('Cheese', () => {
     beforeAll(async() => {
-        await db.sync({force: true})
+        await db.sync({})
     })
 test('cheese has a title and a description', async () => {
     const cheese = await Cheese.create({title: 'St Agur', description: 'a salty blue, crumbly as it is creamy'})
